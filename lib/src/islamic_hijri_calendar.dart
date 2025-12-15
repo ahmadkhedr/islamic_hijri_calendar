@@ -74,9 +74,7 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
   List<DateTime> days = [];
 @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-     print("widget.intilaDate is ${widget.intilaDate}");
       viewmodel.selectedDate = widget.intilaDate;
       viewmodel.currentDisplayMonthYear = widget.intilaDate;
       viewmodel.fromDate = widget.fromDate;

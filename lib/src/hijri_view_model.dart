@@ -62,7 +62,7 @@ class HijriViewModel {
         : HijriCalendarConfig.fromDate(DateTime(day.year, day.month, day.day)
             .subtract(Duration(days: adjustmentValue.abs())));
 
-            
+
     VoidCallback? onTapAction = isPastDate
         ? null // Disable tap for past dates
         : () {
@@ -92,8 +92,6 @@ class HijriViewModel {
                   ? Colors.grey
                   : backgroundColor,
           border: Border.all(
-
-              /// set border color
               color: day.year == todayDate.year &&
                       day.month == todayDate.month &&
                       day.day == todayDate.day

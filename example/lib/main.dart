@@ -39,9 +39,8 @@ class _HijriCalendarExampleState extends State<HijriCalendarExample> {
         child: IslamicHijriCalendar(
           isHijriView:
               true, //allowing users to set either the English calendar only or display the Hijri calendar alongside the English calendar
-          highlightBorder:Colors.red, // Set selected date border color
-         
-        
+          highlightBorder: Colors.red, // Set selected date border color
+
           defaultBorder: Theme.of(context)
               .colorScheme
               .onSurface
@@ -70,7 +69,9 @@ class _HijriCalendarExampleState extends State<HijriCalendarExample> {
             print("Hijri Date : $selectedDate");
           },
           isDisablePreviousNextMonthDates: false,
-          intilaDate: DateTime.now(), fromDate: DateTime(2027), // Set dates which are not included in current month should show disabled or enabled
+          intilaDate: DateTime.now(),
+          fromDate: DateTime
+              .now(), // Set dates which are not included in current month should show disabled or enabled
         ),
       ),
     );
