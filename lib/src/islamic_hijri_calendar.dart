@@ -42,6 +42,11 @@ class IslamicHijriCalendar extends StatefulWidget {
   ///set dates which are not included in current month should show disabled or enabled
   final bool? isDisablePreviousNextMonthDates;
 
+  //Set the initila date for the calender
+  final DateTime intilaDate;
+  //Set the initila date for the calender
+  final DateTime fromDate;
+
   const IslamicHijriCalendar({
     super.key,
     this.isHijriView = true,
@@ -53,8 +58,10 @@ class IslamicHijriCalendar extends StatefulWidget {
     this.adjustmentValue = 0,
     this.getSelectedHijriDate,
     this.getSelectedEnglishDate,
+    required this.intilaDate,
     this.fontFamilyName = "",
     this.isGoogleFont = false,
+   required  this.fromDate ,
     this.isDisablePreviousNextMonthDates = true,
   });
 
@@ -63,9 +70,17 @@ class IslamicHijriCalendar extends StatefulWidget {
 }
 
 class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
-  HijriViewModel viewmodel = HijriViewModel();
+  late HijriViewModel viewmodel = HijriViewModel();
   List<DateTime> days = [];
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+     print("widget.intilaDate is ${widget.intilaDate}");
+      viewmodel.selectedDate = widget.intilaDate;
+      viewmodel.currentDisplayMonthYear = widget.intilaDate;
+      viewmodel.fromDate = widget.fromDate;
+  }
   ///update calendar view when directly value change form user side without set state
   @override
   void didUpdateWidget(IslamicHijriCalendar oldWidget) {
@@ -267,7 +282,7 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
                             ),
                             child: DatePickerDialog(
                               initialDate: viewmodel.currentDisplayMonthYear,
-                              firstDate: DateTime(1900, 1, 1),
+                              firstDate: DateTime.now(),
                               lastDate: DateTime(2050, 12, 31),
                             ),
                           );

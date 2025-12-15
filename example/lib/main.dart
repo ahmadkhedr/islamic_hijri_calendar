@@ -35,13 +35,13 @@ class _HijriCalendarExampleState extends State<HijriCalendarExample> {
     return Scaffold(
       appBar: AppBar(elevation: 1, title: const Text("Islamic Hijri Calendar")),
       body: SizedBox(
-        height: 450,
+        height: 600,
         child: IslamicHijriCalendar(
           isHijriView:
               true, //allowing users to set either the English calendar only or display the Hijri calendar alongside the English calendar
-          highlightBorder: Theme.of(context)
-              .colorScheme
-              .primary, // Set selected date border color
+          highlightBorder:Colors.red, // Set selected date border color
+         
+        
           defaultBorder: Theme.of(context)
               .colorScheme
               .onSurface
@@ -61,12 +61,16 @@ class _HijriCalendarExampleState extends State<HijriCalendarExample> {
               true, // Set it true if you want to use google fonts else false
           fontFamilyName:
               "Lato", // Set your custom font family name or google font name
-          getSelectedEnglishDate:
-              (selectedDate) {}, // returns the date selected by user
-          getSelectedHijriDate:
-              (selectedDate) {}, // returns the date selected by user in Hijri format
-          isDisablePreviousNextMonthDates:
-              true, // Set dates which are not included in current month should show disabled or enabled
+          getSelectedEnglishDate: (selectedDate) {
+            // returns the date selected by user
+            print("English Date : $selectedDate");
+          },
+          getSelectedHijriDate: (selectedDate) {
+            // returns the date selected by user in Hijri format
+            print("Hijri Date : $selectedDate");
+          },
+          isDisablePreviousNextMonthDates: false,
+          intilaDate: DateTime.now(), fromDate: DateTime(2027), // Set dates which are not included in current month should show disabled or enabled
         ),
       ),
     );

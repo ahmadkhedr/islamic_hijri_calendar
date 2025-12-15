@@ -32,6 +32,7 @@ class HijriViewModel {
   DateTime currentDisplayMonthYear = DateTime.now();
   DateTime selectedDate = DateTime.now();
   DateTime todayDate = DateTime.now();
+  DateTime fromDate = DateTime.now();
 
   ///this function is used to set each day block
   Widget getDate({
@@ -51,6 +52,9 @@ class HijriViewModel {
     required bool isDisablePreviousNextMonthDates,
   }) {
     bool isCurrentMonthDays = day.month == currentDisplayMonthYear.month;
+    DateTime normalizedDay = DateTime(day.year, day.month, day.day);
+    bool isPastDate = normalizedDay
+        .isBefore(DateTime(fromDate.year, fromDate.month, fromDate.day));
 
     var hijridate = !adjustmentValue.isNegative
         ? HijriCalendarConfig.fromDate(DateTime(day.year, day.month, day.day)
@@ -58,25 +62,35 @@ class HijriViewModel {
         : HijriCalendarConfig.fromDate(DateTime(day.year, day.month, day.day)
             .subtract(Duration(days: adjustmentValue.abs())));
 
+            
+    VoidCallback? onTapAction = isPastDate
+        ? null // Disable tap for past dates
+        : () {
+            if (!isCurrentMonthDays) {
+              currentDisplayMonthYear = day;
+            }
+            selectedDate = day;
+            onSelectedEnglishDate!(DateTime(day.year, day.month, day.day));
+            onSelectedHijriDate!(HijriDate(
+                year:
+                    DateFunctions.convertEnglishToHijriNumber(hijridate.hYear),
+                month:
+                    DateFunctions.convertEnglishToHijriNumber(hijridate.hMonth),
+                day:
+                    DateFunctions.convertEnglishToHijriNumber(hijridate.hDay)));
+          };
+
     return GestureDetector(
-      onTap: () {
-        if (!isCurrentMonthDays) {
-          currentDisplayMonthYear = day;
-        }
-        selectedDate = day;
-        onSelectedEnglishDate!(DateTime(day.year, day.month, day.day));
-        onSelectedHijriDate!(HijriDate(
-            year: DateFunctions.convertEnglishToHijriNumber(hijridate.hYear),
-            month: DateFunctions.convertEnglishToHijriNumber(hijridate.hMonth),
-            day: DateFunctions.convertEnglishToHijriNumber(hijridate.hDay)));
-      },
+      onTap: onTapAction,
       child: Container(
         decoration: BoxDecoration(
-          color: day.year == todayDate.year &&
-                  day.month == todayDate.month &&
-                  day.day == DateTime.now().day
+          color: day.year == selectedDate.year &&
+                  day.month == selectedDate.month &&
+                  day.day == selectedDate.day
               ? highlightBorder
-              : backgroundColor,
+              : isPastDate
+                  ? Colors.grey
+                  : backgroundColor,
           border: Border.all(
 
               /// set border color
@@ -94,7 +108,7 @@ class HijriViewModel {
               width: day.year == todayDate.year &&
                       day.month == todayDate.month &&
                       day.day == todayDate.day
-                  ? 0
+                  ? 2
                   : selectedDate.year == day.year &&
                           selectedDate.month == day.month &&
                           selectedDate.day == day.day
@@ -109,9 +123,9 @@ class HijriViewModel {
               day.day.toString(),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
-              style: day.year == todayDate.year &&
-                      day.month == todayDate.month &&
-                      day.day == todayDate.day
+              style: day.year == selectedDate.year &&
+                      day.month == selectedDate.month &&
+                      day.day == selectedDate.day
                   ? style?.copyWith(
                           fontSize: fontSize, color: highlightTextColor) ??
                       TextStyle(fontSize: fontSize, color: highlightTextColor)
@@ -132,9 +146,9 @@ class HijriViewModel {
                           .toString(),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
-                      style: day.year == todayDate.year &&
-                              day.month == todayDate.month &&
-                              day.day == todayDate.day
+                      style: day.year == selectedDate.year &&
+                              day.month == selectedDate.month &&
+                              day.day == selectedDate.day
                           ? style?.copyWith(
                                   fontSize: fontSize,
                                   color: highlightTextColor) ??
