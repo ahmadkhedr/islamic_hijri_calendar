@@ -17,16 +17,34 @@ class HijriViewModel {
     "Sat",
     "Sun",
   ];
-
-  var showOfDay = [
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thu",
-    "Fri",
-    "Sat",
+  var headerOfDayAr = [
+    "اثنين",
+    "ثلاثاء",
+    "اربعاء",
+    "خميس",
+    "جمعة",
+    "سبت",
+    "أحد",
   ];
+
+  // var showOfDay = [
+  //   "Sun",
+  //   "Mon",
+  //   "Tue",
+  //   "Wed",
+  //   "Thu",
+  //   "Fri",
+  //   "Sat",
+  // ];
+  // var showOfDayAr = [
+  //   "الأحد",
+  //   "اثنين",
+  //   "ثلاثاء",
+  //   "اربعاء",
+  //   "خميس",
+  //   "جمعة",
+  //   "سبت",
+  // ];
 
   ///below date variables to manage highlight, disable, selected date ui
   DateTime currentDisplayMonthYear = DateTime.now();
@@ -55,13 +73,11 @@ class HijriViewModel {
     DateTime normalizedDay = DateTime(day.year, day.month, day.day);
     bool isPastDate = normalizedDay
         .isBefore(DateTime(fromDate.year, fromDate.month, fromDate.day));
-
     var hijridate = !adjustmentValue.isNegative
         ? HijriCalendarConfig.fromDate(DateTime(day.year, day.month, day.day)
             .add(Duration(days: adjustmentValue)))
         : HijriCalendarConfig.fromDate(DateTime(day.year, day.month, day.day)
             .subtract(Duration(days: adjustmentValue.abs())));
-
 
     VoidCallback? onTapAction = isPastDate
         ? null // Disable tap for past dates

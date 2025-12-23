@@ -47,6 +47,8 @@ class IslamicHijriCalendar extends StatefulWidget {
   //Set the initila date for the calender
   final DateTime fromDate;
 
+  final String lang;
+
   const IslamicHijriCalendar({
     super.key,
     this.isHijriView = true,
@@ -59,9 +61,10 @@ class IslamicHijriCalendar extends StatefulWidget {
     this.getSelectedHijriDate,
     this.getSelectedEnglishDate,
     required this.intilaDate,
+    required this.lang,
     this.fontFamilyName = "",
     this.isGoogleFont = false,
-   required  this.fromDate ,
+    required this.fromDate,
     this.isDisablePreviousNextMonthDates = true,
   });
 
@@ -72,13 +75,15 @@ class IslamicHijriCalendar extends StatefulWidget {
 class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
   late HijriViewModel viewmodel = HijriViewModel();
   List<DateTime> days = [];
-@override
+  @override
   void initState() {
     super.initState();
-      viewmodel.selectedDate = widget.intilaDate;
-      viewmodel.currentDisplayMonthYear = widget.intilaDate;
-      viewmodel.fromDate = widget.fromDate;
+    viewmodel.selectedDate = widget.intilaDate;
+    viewmodel.currentDisplayMonthYear = widget.intilaDate;
+    viewmodel.fromDate = widget.fromDate;
+    HijriCalendarConfig.setLocal(widget.lang);
   }
+
   ///update calendar view when directly value change form user side without set state
   @override
   void didUpdateWidget(IslamicHijriCalendar oldWidget) {
@@ -349,7 +354,10 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
                 children: List.generate(viewmodel.headerOfDay.length, (index) {
                   return Expanded(
                     child: Center(
-                      child: Text(viewmodel.headerOfDay[index],
+                      child: Text(
+                          widget.lang == 'ar'
+                              ? viewmodel.headerOfDayAr[index]
+                              : viewmodel.headerOfDay[index],
                           style: textStyle.copyWith(
                               fontSize: fontSize - 2,
                               color: widget.defaultTextColor)),
