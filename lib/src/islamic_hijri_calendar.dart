@@ -285,7 +285,7 @@ class _HijriCalendarWidgetsState extends State<IslamicHijriCalendar> {
                             ),
                             child: DatePickerDialog(
                               initialDate: viewmodel.currentDisplayMonthYear,
-                              firstDate: DateTime.now(),
+                              firstDate: widget.fromDate,
                               lastDate: DateTime(2050, 12, 31),
                             ),
                           );

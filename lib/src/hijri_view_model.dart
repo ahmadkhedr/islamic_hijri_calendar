@@ -141,10 +141,11 @@ class HijriViewModel {
                       day.month == selectedDate.month &&
                       day.day == selectedDate.day
                   ? style?.copyWith(
-                          fontSize: fontSize, color: highlightTextColor) ??
-                      TextStyle(fontSize: fontSize, color: highlightTextColor)
+                          fontSize: fontSize - 5, color: highlightTextColor) ??
+                      TextStyle(
+                          fontSize: fontSize - 5, color: highlightTextColor)
                   : style?.copyWith(
-                      fontSize: fontSize,
+                      fontSize: fontSize - 5,
                       color: !isCurrentMonthDays
                           ? (isDisablePreviousNextMonthDates
                               ? defaultTextColor.withOpacity(.1)
@@ -153,32 +154,62 @@ class HijriViewModel {
             ),
             !isHijriView
                 ? const SizedBox()
-                : Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Text(
-                      DateFunctions.convertEnglishToHijriNumber(hijridate.hDay)
-                          .toString(),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: day.year == selectedDate.year &&
-                              day.month == selectedDate.month &&
-                              day.day == selectedDate.day
-                          ? style?.copyWith(
-                                  fontSize: fontSize,
-                                  color: highlightTextColor) ??
-                              TextStyle(
-                                  fontSize: fontSize, color: highlightTextColor)
-                          : style?.copyWith(
-                                  fontSize: fontSize,
-                                  color: !isCurrentMonthDays
-                                      ? (isDisablePreviousNextMonthDates
-                                          ? defaultTextColor.withOpacity(.1)
-                                          : defaultTextColor)
-                                      : defaultTextColor) ??
-                              TextStyle(
-                                fontSize: fontSize,
-                              ),
-                    ),
+                : Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Text(
+                          DateFunctions.convertEnglishToHijriNumber(
+                                  hijridate.hDay)
+                              .toString(),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: day.year == selectedDate.year &&
+                                  day.month == selectedDate.month &&
+                                  day.day == selectedDate.day
+                              ? style?.copyWith(
+                                      fontSize: fontSize + 3,
+                                      color: highlightTextColor) ??
+                                  TextStyle(
+                                      fontSize: fontSize + 3,
+                                      color: highlightTextColor)
+                              : style?.copyWith(
+                                      fontSize: fontSize + 3,
+                                      color: !isCurrentMonthDays
+                                          ? (isDisablePreviousNextMonthDates
+                                              ? defaultTextColor.withOpacity(.1)
+                                              : defaultTextColor)
+                                          : defaultTextColor) ??
+                                  TextStyle(
+                                    fontSize: fontSize + 3,
+                                  ),
+                        ),
+                      ),
+                      Text(
+                        hijridate.getLongMonthName(),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: day.year == selectedDate.year &&
+                                day.month == selectedDate.month &&
+                                day.day == selectedDate.day
+                            ? style?.copyWith(
+                                    fontSize: fontSize / 2,
+                                    color: highlightTextColor) ??
+                                TextStyle(
+                                    fontSize: fontSize / 2,
+                                    color: highlightTextColor)
+                            : style?.copyWith(
+                                    fontSize: fontSize / 2,
+                                    color: !isCurrentMonthDays
+                                        ? (isDisablePreviousNextMonthDates
+                                            ? defaultTextColor.withOpacity(.1)
+                                            : defaultTextColor)
+                                        : defaultTextColor) ??
+                                TextStyle(
+                                  fontSize: fontSize / 2,
+                                ),
+                      ),
+                    ],
                   ),
           ],
         ),

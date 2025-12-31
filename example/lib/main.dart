@@ -71,8 +71,7 @@ class _HijriCalendarExampleState extends State<HijriCalendarExample> {
           },
           isDisablePreviousNextMonthDates: false,
           intilaDate: DateTime.now(),
-          fromDate: DateTime
-              .now(), // Set dates which are not included in current month should show disabled or enabled
+          fromDate: DateTime.now().subtract(const Duration(days: 365)),
         ),
       ),
     );
